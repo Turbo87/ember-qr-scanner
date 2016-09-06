@@ -2,6 +2,9 @@
 ember-qr-scanner
 ==============================================================================
 
+[![npm](https://img.shields.io/npm/v/ember-qr-scanner.svg)](https://www.npmjs.com/package/ember-qr-scanner)
+[![Build Status](https://img.shields.io/travis/Turbo87/ember-qr-scanner/master.svg)](https://travis-ci.org/Turbo87/ember-qr-scanner)
+
 [QR Code](https://en.wikipedia.org/wiki/QR_code) scanner component for
 [Ember.js](http://emberjs.com/).
 
