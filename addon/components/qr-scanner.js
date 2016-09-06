@@ -31,10 +31,10 @@ export default Ember.Component.extend({
 
       // Create <video> element
       let video = document.createElement('video');
+      video.autoplay = true;
 
       // Attach media stream to the <video> element
       _setStream(video, stream);
-      video.play();
 
       // Schedule a _run() execution
       this._scheduleRun(video);
