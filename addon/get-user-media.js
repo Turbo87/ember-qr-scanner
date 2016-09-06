@@ -15,6 +15,8 @@ function detectGetUserMedia() {
   }
 }
 
+const getUserMedia = detectGetUserMedia();
+
 /**
  * Polyfill for `getUserMedia()`.
  *
@@ -23,4 +25,6 @@ function detectGetUserMedia() {
  * @param {MediaStreamConstraints} constraints
  * @return Promise<MediaStream>
  */
-export default detectGetUserMedia();
+export default getUserMedia;
+
+export const isSupported = getUserMedia !== undefined;

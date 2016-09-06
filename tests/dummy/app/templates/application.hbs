@@ -1,9 +1,13 @@
-{{qr-scanner onSuccess=(action (mut result)) onError=(action (mut error))}}
+{{#if isSupported}}
+  {{qr-scanner onSuccess=(action (mut result)) onError=(action (mut error))}}
 
-<p>
-  Result: {{result}}
-</p>
+  <p>
+    Result: {{result}}
+  </p>
 
-<p>
-  Error: {{error}}
-</p>
+  <p>
+    Error: {{error}}
+  </p>
+{{else}}
+  Unfortunately your browser does not support WebRTC yet.
+{{/if}}
