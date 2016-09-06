@@ -1,6 +1,6 @@
 {
   "name": "ember-qr-scanner",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "QR code scanner component for Ember.js",
   "license": "MIT",
   "author": "tobias.bieniek@gmail.com",
