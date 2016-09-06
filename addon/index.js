@@ -15,7 +15,22 @@ function detectGetUserMedia() {
   }
 }
 
-const getUserMedia = detectGetUserMedia();
+function createSetStream() {
+  if ('srcObject' in HTMLVideoElement.prototype) {
+    return function(el, stream) {
+      el.srcObject = !!stream ? stream : null;
+    };
+
+  } else {
+    return function(el, stream) {
+      if (stream) {
+        el.src = (window.URL || window.webkitURL).createObjectURL(stream);
+      } else {
+        el.removeAttribute('src');
+      }
+    };
+  }
+}
 
 /**
  * Polyfill for `getUserMedia()`.
@@ -25,6 +40,22 @@ const getUserMedia = detectGetUserMedia();
  * @param {MediaStreamConstraints} constraints
  * @return Promise<MediaStream>
  */
-export default getUserMedia;
+export const getUserMedia = detectGetUserMedia();
 
 export const isSupported = getUserMedia !== undefined;
+
+/**
+ * Assign a media stream to a <video> element.
+ *
+ * @param {HTMLVideoElement} video
+ * @param {MediaStream} stream
+ */
+export const _setStream = createSetStream();
+
+export class ScanError extends Error {
+  constructor(msg) {
+    super(...arguments);
+    this.name = 'ScanError';
+    this.message = msg;
+  }
+}

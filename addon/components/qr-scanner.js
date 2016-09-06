@@ -1,9 +1,7 @@
 import Ember from 'ember';
 import QRCode from 'jsqrcode';
 
-import getUserMedia from '../get-user-media';
-import setStream from '../-set-stream';
-import ScanError from '../scan-error';
+import { getUserMedia, _setStream, ScanError } from 'ember-qr-scanner';
 
 export default Ember.Component.extend({
   tagName: 'canvas',
@@ -35,7 +33,7 @@ export default Ember.Component.extend({
       let video = document.createElement('video');
 
       // Attach media stream to the <video> element
-      setStream(video, stream);
+      _setStream(video, stream);
       video.play();
 
       // Schedule a _run() execution

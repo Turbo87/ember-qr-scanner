@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { isSupported } from 'ember-qr-scanner/get-user-media';
+import { isSupported } from 'ember-qr-scanner';
 
 export default Ember.Controller.extend({
   isSupported,

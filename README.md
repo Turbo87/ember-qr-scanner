@@ -28,11 +28,11 @@ request permission from the user to use the camera.
 The `onError` callback will be called if either the camera stream could not be
 acquired or if the scan of the current video frame did not result in a QR
 code. In the second case a `ScanError` instance will be passed to the callback
-(available through `import ScanError from 'ember-qr-scanner/scan-error';`).
+(available through `import { ScanError } from 'ember-qr-scanner';`).
 
 You can check for browser compatibility by using
-`import { isSupported } from 'ember-qr-scanner/get-user-media';` and then
-checking the `isSupported` flag.
+`import { isSupported } from 'ember-qr-scanner';` and then checking the
+`isSupported` flag.
 
 
 Links
