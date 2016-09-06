@@ -44,13 +44,35 @@ export default Ember.Component.extend({
     });
   },
 
+  findBackFacingCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      return Ember.RSVP.Promise.resolve();
+    }
+
+    return navigator.mediaDevices.enumerateDevices().then(devices => {
+      return devices.filter(device => device.kind === 'videoinput' || device.kind === 'video')
+        .filter(device => (/back|environment/).test(device.label))
+        .map(device => device.deviceId)[0];
+    });
+  },
+
   requestCameraAccess() {
-    let constraints = { audio: false, video: { facingMode: 'environment' }};
-    if (getUserMedia) {
-      return getUserMedia(constraints);
-    } else {
+    if (!getUserMedia) {
       return Ember.RSVP.Promise.reject(new Error('getUserMedia() is not available in this browser'));
     }
+
+    return this.findBackFacingCamera().then(deviceId => {
+      return getUserMedia({
+        audio: false,
+        video: {
+          facingMode: 'environment',
+          deviceId,
+          optional: [{
+            sourceId: deviceId,
+          }],
+        }
+      });
+    });
   },
 
   _scheduleRun(video) {
