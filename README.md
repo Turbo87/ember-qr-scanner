@@ -5,6 +5,8 @@ ember-qr-scanner
 [QR Code](https://en.wikipedia.org/wiki/QR_code) scanner component for
 [Ember.js](http://emberjs.com/).
 
+Demo: <https://turbo87.github.io/ember-qr-scanner/>
+
 
 Installation
 ------------------------------------------------------------------------------

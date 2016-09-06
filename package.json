@@ -62,6 +62,7 @@
     "loader.js": "^4.0.1"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://turbo87.github.io/ember-qr-scanner/"
   }
 }
