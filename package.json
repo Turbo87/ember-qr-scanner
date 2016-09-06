@@ -21,6 +21,12 @@
     "qr-scanner"
   ],
   "main": "index.js",
+  "files": [
+    "addon",
+    "app",
+    "vendor",
+    "index.js"
+  ],
   "scripts": {
     "build": "ember build",
     "start": "ember server",
