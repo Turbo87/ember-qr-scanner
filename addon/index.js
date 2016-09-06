@@ -5,7 +5,12 @@ function detectGetUserMedia() {
     return navigator.mediaDevices.requestCameraAccess;
   }
 
-  let oldGetUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+  let oldGetUserMedia =
+    navigator.getUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.msGetUserMedia;
+
   if (oldGetUserMedia) {
     return function(constraints) {
       return new Ember.RSVP.Promise(function(resolve, reject) {
