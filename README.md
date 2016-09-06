@@ -30,6 +30,10 @@ acquired or if the scan of the current video frame did not result in a QR
 code. In the second case a `ScanError` instance will be passed to the callback
 (available through `import ScanError from 'ember-qr-scanner/scan-error';`).
 
+You can check for browser compatibility by using
+`import getUserMedia from 'ember-qr-scanner/get-user-media';` and then
+checking if `getUserMedia` is implemented or `undefined`.
+
 
 Links
 ------------------------------------------------------------------------------
