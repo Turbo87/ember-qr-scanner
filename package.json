@@ -1,22 +1,37 @@
 {
   "name": "ember-qr-scanner",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
+  "description": "QR code scanner component for Ember.js",
+  "license": "MIT",
+  "author": "tobias.bieniek@gmail.com",
+  "homepage": "https://github.com/Turbo87/ember-qr-scanner",
+  "bugs": {
+    "url": "https://github.com/Turbo87/ember-qr-scanner/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Turbo87/ember-qr-scanner.git"
+  },
+  "keywords": [
+    "ember-addon",
+    "qr",
+    "qrcode",
+    "qr-code",
+    "scanner",
+    "qr-scanner"
+  ],
+  "main": "index.js",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember try:each"
+    "test": "ember test"
   },
-  "repository": "",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
-  "license": "MIT",
+  "dependencies": {
+    "ember-cli-babel": "^5.1.6"
+  },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "ember-ajax": "^2.0.1",
@@ -38,12 +53,6 @@
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.1"
-  },
-  "keywords": [
-    "ember-addon"
-  ],
-  "dependencies": {
-    "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
