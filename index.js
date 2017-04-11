@@ -4,8 +4,9 @@
 module.exports = {
   name: 'ember-qr-scanner',
 
-  included: function() {
-    this.import('vendor/jsqrcode.js');
-    this.import('vendor/shims/jsqrcode.js');
+  included: function(app) {
+    this._super.included(app);
+    app.import('vendor/jsqrcode.js');
+    app.import('vendor/shims/jsqrcode.js');
   },
 };
