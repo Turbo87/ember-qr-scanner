@@ -4,10 +4,10 @@ import QRCode from 'jsqrcode';
 import { getUserMedia, _setStream, ScanError } from 'ember-qr-scanner';
 
 export default Ember.Component.extend({
-  tagName: 'canvas',
+  tagName: 'video',
   attributeBindings: ['width','height'],
 
-  frameRate: 60,
+  frameRate: 30,
 
   init() {
     this._super(...arguments);
@@ -29,15 +29,21 @@ export default Ember.Component.extend({
     // Request camera access via getUserMedia()
     this.requestCameraAccess().then(stream => {
 
-      // Create <video> element
-      let video = document.createElement('video');
-      video.autoplay = true;
+      // Get the <video> element
+      let video = this.element;
+
+      // Create <canvas> element
+      let canvas = document.createElement('canvas');
+      canvas.style.display = "none";
+      canvas.width = this.get("width");
+      canvas.height = this.get("height");
 
       // Attach media stream to the <video> element
       _setStream(video, stream);
+      video.play();
 
       // Schedule a _run() execution
-      this._scheduleRun(video);
+      this._scheduleRun(canvas);
 
     }).catch(error => {
       this.getWithDefault('onError', Ember.K)(error);
@@ -75,9 +81,9 @@ export default Ember.Component.extend({
     });
   },
 
-  _scheduleRun(video) {
+  _scheduleRun(canvas) {
     let frameRate = this.get('frameRate');
-    this.set('timerId', Ember.run.later(this, '_run', video, 1E3 / frameRate));
+    this.set('timerId', Ember.run.later(this, '_run', canvas, 1E3 / frameRate));
   },
 
   _cancelRun() {
@@ -87,15 +93,16 @@ export default Ember.Component.extend({
     }
   },
 
-  _run(video) {
+  _run(canvas) {
+    let video = this.element;
     if (!video.paused && !video.ended) {
-      let context = this.element.getContext('2d');
+      let context = canvas.getContext('2d');
 
       // Transfer image from <video> element to the <canvas>
-      context.drawImage(video, 0, 0, this.element.width, this.element.height);
+      context.drawImage(video, 0, 0);
 
       // Read image data from <canvas>
-      let imageData = context.getImageData(0, 0, this.element.width, this.element.height);
+      let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
       // Detect QR code on <canvas> image
       try {
@@ -107,6 +114,6 @@ export default Ember.Component.extend({
     }
 
     // Schedule next _run() execution
-    this._scheduleRun(video);
+    this._scheduleRun(canvas);
   },
 });
