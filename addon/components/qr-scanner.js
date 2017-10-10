@@ -7,6 +7,8 @@ export default Ember.Component.extend({
   tagName: 'canvas',
   attributeBindings: ['width','height'],
 
+  mediaStream: null,
+
   frameRate: 60,
 
   init() {
@@ -28,6 +30,9 @@ export default Ember.Component.extend({
   _start() {
     // Request camera access via getUserMedia()
     this.requestCameraAccess().then(stream => {
+
+      // Save the stream
+      this.set("mediaStream", stream);
 
       // Create <video> element
       let video = document.createElement('video');
@@ -85,6 +90,26 @@ export default Ember.Component.extend({
     if (timerId) {
       Ember.run.cancel(timerId);
     }
+
+    // Cross browser stream.stop hack from:https://stackoverflow.com/questions/11642926/stop-close-webcam-which-is-opened-by-navigator-getusermedia
+    var MediaStream = window.MediaStream;
+    if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefined') {
+        MediaStream = webkitMediaStream;
+    }
+    if (typeof MediaStream !== 'undefined' && !('stop' in MediaStream.prototype)) {
+        MediaStream.prototype.stop = function() {
+            this.getAudioTracks().forEach(function(track) {
+                track.stop();
+            });
+
+            this.getVideoTracks().forEach(function(track) {
+                track.stop();
+            });
+        };
+    }
+
+    // Stop this stream
+    this.get("mediaStream").stop();
   },
 
   _run(video) {
