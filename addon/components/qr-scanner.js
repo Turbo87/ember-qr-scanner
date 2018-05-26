@@ -40,7 +40,7 @@ export default Ember.Component.extend({
       this._scheduleRun(video);
 
     }).catch(error => {
-      this.getWithDefault('onError')(error);
+      this.getWithDefault('onError', () => {})(error);
     });
   },
 
@@ -102,7 +102,7 @@ export default Ember.Component.extend({
         let result = this.get('qr').process(imageData);
         this.get('onSuccess')(result);
       } catch (error) {
-        this.getWithDefault('onError')(new ScanError(error));
+        this.getWithDefault('onError', () => {})(new ScanError(error));
       }
     }
 
