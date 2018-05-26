@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import QRCode from 'jsqrcode';
+import StopMediaStream from 'stopmediastream';
 
 import { getUserMedia, _setStream, ScanError } from 'ember-qr-scanner';
 
@@ -25,6 +26,8 @@ export default Ember.Component.extend({
 
   willRemoveElement() {
     this._cancelRun();
+    // 'stop' function existance ensured by StopMediaStream
+    this.get("mediaStream").stop();
   },
 
   _start() {
@@ -90,26 +93,6 @@ export default Ember.Component.extend({
     if (timerId) {
       Ember.run.cancel(timerId);
     }
-
-    // Cross browser stream.stop hack from:https://stackoverflow.com/questions/11642926/stop-close-webcam-which-is-opened-by-navigator-getusermedia
-    var MediaStream = window.MediaStream;
-    if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefined') {
-        MediaStream = webkitMediaStream;
-    }
-    if (typeof MediaStream !== 'undefined' && !('stop' in MediaStream.prototype)) {
-        MediaStream.prototype.stop = function() {
-            this.getAudioTracks().forEach(function(track) {
-                track.stop();
-            });
-
-            this.getVideoTracks().forEach(function(track) {
-                track.stop();
-            });
-        };
-    }
-
-    // Stop this stream
-    this.get("mediaStream").stop();
   },
 
   _run(video) {
