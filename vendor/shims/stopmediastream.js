@@ -1,5 +1,5 @@
 // Cross browser stream.stop hack from:https://stackoverflow.com/questions/11642926/stop-close-webcam-which-is-opened-by-navigator-getusermedia
-(function () {
+export default function () {
   var MediaStream = window.MediaStream;
   if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefined') {
       MediaStream = webkitMediaStream;
@@ -15,4 +15,4 @@
           });
       };
   }
-})()
+}

@@ -17,6 +17,7 @@ export default Ember.Component.extend({
 
     let qr = new QRCode();
     this.set('qr', qr);
+    StopMediaStream()
   },
 
   didInsertElement() {
