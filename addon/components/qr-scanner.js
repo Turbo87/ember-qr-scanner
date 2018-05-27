@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     Ember.run.scheduleOnce('afterRender', this, '_start');
   },
 
-  willRemoveElement() {
+  willDestroyElement() {
     this._cancelRun();
   },
 
@@ -40,7 +40,7 @@ export default Ember.Component.extend({
       this._scheduleRun(video);
 
     }).catch(error => {
-      this.getWithDefault('onError', Ember.K)(error);
+      this.getWithDefault('onError', () => {})(error);
     });
   },
 
@@ -102,7 +102,7 @@ export default Ember.Component.extend({
         let result = this.get('qr').process(imageData);
         this.get('onSuccess')(result);
       } catch (error) {
-        this.getWithDefault('onError', Ember.K)(new ScanError(error));
+        this.getWithDefault('onError', () => {})(new ScanError(error));
       }
     }
 
