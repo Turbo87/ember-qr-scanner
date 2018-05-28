@@ -1,11 +1,14 @@
 import Ember from 'ember';
 import QRCode from 'jsqrcode';
+import StopMediaStream from 'stopmediastream';
 
 import { getUserMedia, _setStream, ScanError } from 'ember-qr-scanner';
 
 export default Ember.Component.extend({
   tagName: 'canvas',
   attributeBindings: ['width','height'],
+
+  mediaStream: null,
 
   frameRate: 60,
 
@@ -14,6 +17,7 @@ export default Ember.Component.extend({
 
     let qr = new QRCode();
     this.set('qr', qr);
+    StopMediaStream.init();
   },
 
   didInsertElement() {
@@ -23,11 +27,16 @@ export default Ember.Component.extend({
 
   willDestroyElement() {
     this._cancelRun();
+    // 'stop' function existance ensured by StopMediaStream
+    this.get("mediaStream").stop();
   },
 
   _start() {
     // Request camera access via getUserMedia()
     this.requestCameraAccess().then(stream => {
+
+      // Save the stream
+      this.set("mediaStream", stream);
 
       // Create <video> element
       let video = document.createElement('video');
